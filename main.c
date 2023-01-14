@@ -8,25 +8,32 @@ int ft_c(int c)
     return write(1, &c, 1);
 }
 
-int ft_s(const char* s)
+int ft_s(char* s)
 {
     int len = 0;
-    while (*s)
+    if (s != NULL)
     {
-        len += write(1, s, 1);
-        s++;
+        while (*s)
+        {
+            len += write(1, s, 1);
+            s++;
+        }
+    }
+    else
+    {
+        len += write(1, "(null)", 6);
     }
     return len;
 }
 
-int ft_u(unsigned int n, unsigned int base)
+int ft_u(unsigned long n, unsigned int base)
 {
     int len = 0;
     if (n >= base)
     {
         len += ft_u(n / base, base);
     }
-    char c = n % base;
+    char c = (n % base);
     if (c < 10)
     {
         c += '0';
@@ -42,10 +49,15 @@ int ft_u(unsigned int n, unsigned int base)
 int ft_p(void* p)
 {
     int len = 0;
+    if (p == NULL) {
+        len += write(1, "(null)", 6);
+        return len;
+    }
     len += write(1, "0x", 2);
-    len += ft_u((uintptr_t)p, 16);
+    len += ft_u((unsigned long)p, 16);
     return len;
 }
+
 
 int ft_d(int n)
 {
@@ -101,7 +113,7 @@ int ft_percent(void)
 
 
 
-int f_mode(va_list args, const char mode)
+int f_mode(va_list args, char mode)
 {
     int len = 0;
     if (mode == 'c')
@@ -125,7 +137,7 @@ int f_mode(va_list args, const char mode)
     return len;
 }
 
-int ft_printf(const char* fmt, ...)
+int ft_printf(char* fmt, ...)
 {
     int len = 0;
     va_list args;

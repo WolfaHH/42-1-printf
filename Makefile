@@ -1,6 +1,6 @@
 NAME    = libftprintf.a
 
-SRCS    = main.c 
+SRCS    = set1.c set2.c main.c 
 
 
 OBJS    = $(SRCS:.c=.o)
